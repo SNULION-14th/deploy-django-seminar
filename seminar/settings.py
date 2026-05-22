@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "drf_yasg",
+    "drf_spectacular",
     "post",
     "account",
     "tag",
@@ -139,6 +139,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 REST_USE_JWT = True
 
@@ -157,17 +158,9 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN": "refresh_token",
 }
 
-SWAGGER_SETTINGS = {
-    'USE_SESSION_AUTH': False,
-    'SECURITY_DEFINITIONS': {
-        'BearerAuth': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header',
-            'description': "JWT Token"
-        }
-    },
-    'SECURITY_REQUIREMENTS': [{
-        'BearerAuth': []
-    }]
+SPECTACULAR_SETTINGS = {
+    "TITLE": "LIKELION Blog API",
+    "DESCRIPTION": "Test description",
+    "VERSION": "v1",
+    "SERVE_INCLUDE_SCHEMA": False,
 }

@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from account.request_serializers import (
@@ -37,10 +37,10 @@ def set_token_on_response_cookie(user, status_code) -> Response:
 
 
 class SignUpView(APIView):
-    @swagger_auto_schema(
+    @extend_schema(
         operation_id="회원가입",
-        operation_description="회원가입을 진행합니다.",
-        request_body=SignUpRequestSerializer,
+        description="회원가입을 진행합니다.",
+        request=SignUpRequestSerializer,
         responses={201: UserProfileSerializer, 400: "Bad Request"},
     )
     def post(self, request):
@@ -59,10 +59,10 @@ class SignUpView(APIView):
 
 
 class SignInView(APIView):
-    @swagger_auto_schema(
+    @extend_schema(
         operation_id="로그인",
-        operation_description="로그인을 진행합니다.",
-        request_body=SignInRequestSerializer,
+        description="로그인을 진행합니다.",
+        request=SignInRequestSerializer,
         responses={200: UserSerializer, 404: "Not Found", 400: "Bad Request"},
     )
     def post(self, request):
@@ -84,10 +84,10 @@ class SignInView(APIView):
 
 
 class TokenRefreshView(APIView):
-    @swagger_auto_schema(
+    @extend_schema(
         operation_id="토큰 재발급",
-        operation_description="access 토큰을 재발급 받습니다.",
-        request_body=TokenRefreshRequestSerializer,
+        description="access 토큰을 재발급 받습니다.",
+        request=TokenRefreshRequestSerializer,
         responses={200: UserProfileSerializer},
     )
     def post(self, request):
@@ -110,9 +110,9 @@ class TokenRefreshView(APIView):
 
 
 class SignOutView(APIView):
-    @swagger_auto_schema(
+    @extend_schema(
         operation_id="로그아웃",
-        operation_description="로그아웃을 진행합니다.",
+        description="로그아웃을 진행합니다.",
         responses={204: "No Content"},
     )
     def post(self, request):
